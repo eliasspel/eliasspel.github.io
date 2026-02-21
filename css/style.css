@@ -626,7 +626,7 @@ button {
 
 .admin-btn {
   padding: 8px 16px;
-  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  background: linear-gradient(135deg, #4a9eff, #6366f1);
   color: #fff;
   font-size: 13px;
   font-weight: 700;
@@ -1093,8 +1093,8 @@ button {
 
 /* ===== Role Badges ===== */
 .badge-owner {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  color: #1a1a2e;
+  background: linear-gradient(135deg, #4a9eff, #6366f1);
+  color: #fff;
   padding: 3px 10px;
   border-radius: 6px;
   font-size: 11px;
