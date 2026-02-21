@@ -3,40 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laddar spel...</title>
+  <title>Shop - Elias Spelportal</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body class="game-page">
-  <header class="game-header">
-    <a href="index.html" class="back-button">← Tillbaka</a>
-    <h1 class="game-title" id="game-title">Laddar...</h1>
-    <button class="fav-button" id="fav-btn" title="Lägg till favorit">♡</button>
-    <button class="fullscreen-button" id="fullscreen-btn" title="Fullskärm">⛶</button>
-  </header>
-
-  <main class="game-main">
-    <div class="game-wrapper" id="game-wrapper">
-      <div class="game-loader" id="game-loader">
-        <div class="spinner"></div>
-        <p>Laddar spelet...</p>
+<body class="shop-page">
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="back-button">← Tillbaka</a>
+      <div class="logo" id="logo">
+        <span class="logo-icon">🛒</span>
+        <span class="logo-text">Shop</span>
       </div>
-      <iframe id="game-iframe" class="game-iframe" allowfullscreen></iframe>
+      <div class="shop-coins-header">🪙 <span id="shop-coins">0</span></div>
+      <div class="header-auth" id="header-auth"></div>
     </div>
-
-    <div class="game-info" id="game-info">
-      <p class="game-description" id="game-description"></p>
-      <span class="game-category-badge" id="game-category"></span>
-      <button class="claim-coins-btn" id="claim-coins-btn">🪙 Hämta +25 coins</button>
-    </div>
-
-    <section class="more-games" id="more-games-section">
-      <h2 class="section-title">🎮 Fler spel</h2>
-      <div class="games-grid small" id="more-games-grid"></div>
-    </section>
-  </main>
+  </header>
 
   <!-- Auth Modal -->
   <div class="modal-overlay" id="auth-modal">
@@ -71,6 +55,14 @@
       </form>
     </div>
   </div>
+
+  <main class="main shop-main">
+    <div class="shop-header-banner">
+      <h1>🛒 Shoppa med dina coins</h1>
+      <p>Tjäna coins genom att spela spel och köp coola saker!</p>
+    </div>
+    <div id="shop-grid"></div>
+  </main>
 
   <footer class="footer">
     <p>Skapat av <strong>Elia</strong> &mdash; Elias Spelportal &copy; 2026</p>

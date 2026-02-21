@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Elias Spelportal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-primary: #0f0f1a; --bg-secondary: #1a1a2e; --bg-card: #16213e;
+      --accent-green: #00d4aa; --accent-blue: #4a9eff; --accent-red: #f87171;
+      --accent-orange: #fb923c; --accent-yellow: #fbbf24; --accent-purple: #a855f7;
+      --text-primary: #fff; --text-secondary: #94a3b8; --text-muted: #64748b;
+      --border-color: #1e293b; --radius: 12px;
+    }
+    body { font-family: 'Nunito', sans-serif; background: var(--bg-primary); color: var(--text-primary); min-height: 100vh; }
+
+    .admin-header { display: flex; align-items: center; gap: 16px; padding: 16px 24px; background: rgba(15,15,26,0.95); border-bottom: 1px solid var(--border-color); flex-wrap: wrap; }
+    .admin-header h1 { font-size: 22px; font-weight: 800; }
+    .owner-title { background: linear-gradient(135deg, #fbbf24, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .admin-title { color: var(--accent-orange); }
+    .back-link { padding: 8px 16px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 50px; color: var(--text-secondary); font-size: 14px; font-weight: 600; text-decoration: none; transition: 0.2s; }
+    .back-link:hover { background: var(--bg-card); color: var(--text-primary); }
+    .admin-user { margin-left: auto; font-size: 14px; color: var(--text-muted); }
+
+    .tabs { display: flex; gap: 4px; max-width: 960px; margin: 24px auto 0; padding: 0 24px; }
+    .tab { padding: 10px 24px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-bottom: none; border-radius: 10px 10px 0 0; color: var(--text-muted); font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.2s; font-family: inherit; }
+    .tab:hover { color: var(--text-primary); }
+    .tab.active { background: var(--bg-card); color: var(--text-primary); border-color: var(--accent-blue); border-bottom: 1px solid var(--bg-card); }
+
+    .tab-content { max-width: 960px; margin: 0 auto; padding: 0 24px 40px; }
+    .panel { display: none; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 0 0 var(--radius) var(--radius); padding: 24px; }
+    .panel.active { display: block; }
+
+    .stats-bar { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+    .stat-pill { padding: 6px 14px; background: var(--bg-secondary); border-radius: 50px; font-size: 13px; font-weight: 700; color: var(--text-secondary); }
+    .stat-pill strong { color: var(--accent-blue); }
+    .stat-pill .coins { color: var(--accent-yellow); }
+
+    .search-bar { width: 100%; padding: 10px 16px; background: var(--bg-secondary); border: 2px solid var(--border-color); border-radius: 50px; color: var(--text-primary); font-size: 15px; font-family: inherit; outline: none; margin-bottom: 20px; }
+    .search-bar:focus { border-color: var(--accent-blue); }
+
+    .item-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 10px; }
+    .item-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+    .item-name { font-weight: 700; font-size: 15px; }
+    .styled-name { font-weight: 700; }
+    .badge { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 3px 10px; border-radius: 6px; }
+    .badge-forslag { background: rgba(74,158,255,0.15); color: var(--accent-blue); }
+    .badge-forbattring { background: rgba(0,212,170,0.15); color: var(--accent-green); }
+    .badge-bugg { background: rgba(248,113,113,0.15); color: var(--accent-red); }
+    .badge-owner { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #1a1a2e; font-weight: 800; }
+    .badge-admin { background: rgba(251,146,60,0.15); color: var(--accent-orange); }
+    .badge-banned { background: rgba(248,113,113,0.2); color: var(--accent-red); }
+    .badge-active { background: rgba(0,212,170,0.15); color: var(--accent-green); }
+    .item-date { margin-left: auto; font-size: 12px; color: var(--text-muted); }
+    .item-message { font-size: 14px; color: var(--text-secondary); line-height: 1.6; white-space: pre-wrap; }
+    .item-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
+
+    .btn-sm { padding: 5px 14px; font-size: 12px; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-family: inherit; transition: 0.2s; }
+    .btn-delete { background: rgba(248,113,113,0.1); color: var(--accent-red); }
+    .btn-delete:hover { background: rgba(248,113,113,0.25); }
+    .btn-ban { background: rgba(248,113,113,0.1); color: var(--accent-red); }
+    .btn-ban:hover { background: rgba(248,113,113,0.25); }
+    .btn-unban { background: rgba(0,212,170,0.1); color: var(--accent-green); }
+    .btn-unban:hover { background: rgba(0,212,170,0.25); }
+    .btn-promote { background: rgba(251,146,60,0.1); color: var(--accent-orange); }
+    .btn-promote:hover { background: rgba(251,146,60,0.25); }
+    .btn-demote { background: rgba(168,85,247,0.1); color: var(--accent-purple); }
+    .btn-demote:hover { background: rgba(168,85,247,0.25); }
+    .btn-coins { background: rgba(251,191,36,0.1); color: var(--accent-yellow); }
+    .btn-coins:hover { background: rgba(251,191,36,0.25); }
+
+    .coins-input { width: 80px; padding: 4px 8px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-primary); font-size: 13px; font-family: inherit; text-align: center; outline: none; }
+    .coins-input:focus { border-color: var(--accent-yellow); }
+
+    .user-avatar { font-size: 28px; line-height: 1; }
+    .user-stats { display: flex; gap: 16px; margin-top: 8px; font-size: 13px; color: var(--text-muted); flex-wrap: wrap; }
+    .user-stats span strong { color: var(--text-secondary); }
+
+    .empty { text-align: center; padding: 40px; color: var(--text-muted); }
+    .empty-icon { font-size: 48px; display: block; margin-bottom: 8px; }
+    .access-denied { text-align: center; padding: 80px 20px; }
+    .access-denied h2 { font-size: 24px; margin-bottom: 12px; }
+    .access-denied p { color: var(--text-muted); margin-bottom: 20px; }
+    .access-denied a { color: var(--accent-blue); text-decoration: underline; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 600px) { .tabs { gap: 2px; } .tab { padding: 8px 14px; font-size: 13px; } .panel { padding: 16px; } }
+  </style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+  const USERS_KEY = 'elias-spelportal-users';
+  const SESSION_KEY = 'elias-spelportal-session';
+  const FEEDBACK_KEY = 'elias-spelportal-feedback';
+  const OWNER_USERNAME = 'Hack33m_';
+
+  function getUsers() { try { return JSON.parse(localStorage.getItem(USERS_KEY)) || []; } catch { return []; } }
+  function saveUsers(u) { localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
+  function getFeedback() { try { return JSON.parse(localStorage.getItem(FEEDBACK_KEY)) || []; } catch { return []; } }
+  function saveFeedback(f) { localStorage.setItem(FEEDBACK_KEY, JSON.stringify(f)); }
+  function getCurrentUser() { try { const s = JSON.parse(localStorage.getItem(SESSION_KEY)); if (!s) return null; return getUsers().find(u => u.username === s.username) || null; } catch { return null; } }
+  function isOwner() { const u = getCurrentUser(); return u && u.username === OWNER_USERNAME; }
+  function isAdmin() { const u = getCurrentUser(); return u && (u.role === 'admin' || u.role === 'owner'); }
+
+  function esc(str) { const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
+  function fmtDate(iso) { return new Date(iso).toLocaleDateString('sv-SE', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }); }
+
+  function getStyledName(user) {
+    if (!user) return '';
+    let style = '';
+    const c = user.nameColor;
+    if (c === 'rainbow') style += 'background:linear-gradient(90deg,#f87171,#fbbf24,#4ade80,#60a5fa,#c084fc,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;';
+    else if (c) style += 'color:' + c + ';';
+    if (user.nameEffect === 'bold') style += 'font-weight:900;';
+    if (user.nameEffect === 'glow') style += 'text-shadow:0 0 8px ' + (c||'#4a9eff') + ',0 0 16px ' + (c||'#4a9eff') + ';';
+    return '<span class="styled-name" style="' + style + '">' + esc(user.username) + '</span>';
+  }
+
+  const app = document.getElementById('app');
+  if (!isAdmin()) {
+    app.innerHTML = '<div class="access-denied"><h2>🔒 Åtkomst nekad</h2><p>Du måste vara admin för att se denna sida.</p><a href="index.html">← Tillbaka</a></div>';
+  } else {
+    renderAdmin();
+  }
+
+  function renderAdmin() {
+    const user = getCurrentUser();
+    const titleClass = isOwner() ? 'owner-title' : 'admin-title';
+    const roleLabel = isOwner() ? 'Owner' : 'Admin';
+    app.innerHTML = `
+      <header class="admin-header">
+        <a href="index.html" class="back-link">← Tillbaka</a>
+        <h1><span class="${titleClass}">🛡️ ${roleLabel} Panel</span></h1>
+        <span class="admin-user">${user.avatar} ${esc(user.username)}</span>
+      </header>
+      <div class="tabs">
+        <button class="tab active" data-panel="feedback">📬 Feedback</button>
+        <button class="tab" data-panel="accounts">👥 Konton</button>
+      </div>
+      <div class="tab-content">
+        <div class="panel active" id="panel-feedback"></div>
+        <div class="panel" id="panel-accounts"></div>
+      </div>`;
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
+      });
+    });
+    renderFeedbackPanel();
+    renderAccountsPanel();
+  }
+
+  function renderFeedbackPanel() {
+    const panel = document.getElementById('panel-feedback');
+    const list = getFeedback();
+    const tl = { forslag: 'Förslag', forbattring: 'Förbättring', bugg: 'Bugg' };
+    const tb = { forslag: 'badge-forslag', forbattring: 'badge-forbattring', bugg: 'badge-bugg' };
+    if (!list.length) { panel.innerHTML = '<div class="empty"><span class="empty-icon">📭</span><p>Ingen feedback ännu.</p></div>'; return; }
+    let h = `<div class="stats-bar">
+      <span class="stat-pill">Totalt: <strong>${list.length}</strong></span>
+      <span class="stat-pill">Förslag: <strong>${list.filter(f=>f.type==='forslag').length}</strong></span>
+      <span class="stat-pill">Förbättringar: <strong>${list.filter(f=>f.type==='forbattring').length}</strong></span>
+      <span class="stat-pill">Buggar: <strong>${list.filter(f=>f.type==='bugg').length}</strong></span>
+    </div>`;
+    [...list].reverse().forEach((item, ri) => {
+      const idx = list.length - 1 - ri;
+      h += `<div class="item-card">
+        <div class="item-top"><span class="item-name">${esc(item.name)}</span><span class="badge ${tb[item.type]||'badge-forslag'}">${tl[item.type]||item.type}</span><span class="item-date">${fmtDate(item.date)}</span></div>
+        <div class="item-message">${esc(item.message)}</div>
+        <div class="item-actions"><button class="btn-sm btn-delete" data-fb-idx="${idx}">Ta bort</button></div>
+      </div>`;
+    });
+    panel.innerHTML = h;
+    panel.querySelectorAll('[data-fb-idx]').forEach(btn => {
+      btn.addEventListener('click', () => { const fb = getFeedback(); fb.splice(parseInt(btn.dataset.fbIdx), 1); saveFeedback(fb); renderFeedbackPanel(); });
+    });
+  }
+
+  function renderAccountsPanel(filter) {
+    const panel = document.getElementById('panel-accounts');
+    const users = getUsers();
+    const q = (filter || '').toLowerCase().trim();
+    const filtered = q ? users.filter(u => u.username.toLowerCase().includes(q)) : users;
+    const curIsOwner = isOwner();
+
+    let h = `<div class="stats-bar">
+      <span class="stat-pill">Konton: <strong>${users.length}</strong></span>
+      <span class="stat-pill">Bannade: <strong>${users.filter(u=>u.banned).length}</strong></span>
+      <span class="stat-pill">Admins: <strong>${users.filter(u=>u.role==='admin').length}</strong></span>
+      <span class="stat-pill">Totala coins: <strong class="coins">${users.reduce((s,u)=>s+(u.coins||0),0)}</strong> 🪙</span>
+    </div>
+    <input type="text" class="search-bar" id="account-search" placeholder="🔍 Sök användarnamn..." value="${esc(filter||'')}">`;
+
+    if (!filtered.length) {
+      h += '<div class="empty"><span class="empty-icon">🔍</span><p>Inga konton hittades.</p></div>';
+    } else {
+      filtered.forEach(u => {
+        const uRole = u.role || 'user';
+        const isOwnerUser = u.username === OWNER_USERNAME;
+        const isAdminUser = uRole === 'admin';
+        const statusBadge = u.banned ? '<span class="badge badge-banned">Bannad</span>' : '<span class="badge badge-active">Aktiv</span>';
+        let roleBadge = '';
+        if (isOwnerUser) roleBadge = ' <span class="badge badge-owner">Owner</span>';
+        else if (isAdminUser) roleBadge = ' <span class="badge badge-admin">Admin</span>';
+
+        const favCount = (u.favorites || []).length;
+        const coins = u.coins || 0;
+        const title = u.title || '—';
+
+        // Determine what actions current user can perform
+        let actions = '';
+
+        // Owner can never be touched by anyone
+        if (!isOwnerUser) {
+          // Ban/unban — owner can always, admins can only ban regular users
+          if (curIsOwner || (!isAdminUser)) {
+            actions += u.banned
+              ? `<button class="btn-sm btn-unban" data-user="${esc(u.username)}" data-action="unban">Avbanna</button>`
+              : `<button class="btn-sm btn-ban" data-user="${esc(u.username)}" data-action="ban">Banna</button>`;
+          }
+
+          // Promote/demote — only owner
+          if (curIsOwner) {
+            if (isAdminUser) {
+              actions += `<button class="btn-sm btn-demote" data-user="${esc(u.username)}" data-action="demote">Ta bort admin</button>`;
+            } else {
+              actions += `<button class="btn-sm btn-promote" data-user="${esc(u.username)}" data-action="promote">Gör admin</button>`;
+            }
+          }
+
+          // Delete — owner can delete anyone, admins can only delete regular users
+          if (curIsOwner || (!isAdminUser)) {
+            actions += `<button class="btn-sm btn-delete" data-user="${esc(u.username)}" data-action="delete">Ta bort</button>`;
+          }
+        }
+
+        // Coins — owner can edit anyone's coins (including own), admins can edit non-admin/non-owner
+        const canEditCoins = curIsOwner || (!isOwnerUser && !isAdminUser);
+        const coinsEdit = canEditCoins
+          ? `<input type="number" class="coins-input" data-user="${esc(u.username)}" value="0" min="-99999" max="99999">
+             <button class="btn-sm btn-coins" data-user="${esc(u.username)}" data-action="add-coins">+/- Coins</button>`
+          : '';
+
+        h += `<div class="item-card">
+          <div class="item-top">
+            <span class="user-avatar">${u.avatar||'😀'}</span>
+            <span class="item-name">${getStyledName(u)}</span>
+            ${statusBadge}${roleBadge}
+            <span class="item-date">Gick med ${u.joined ? fmtDate(u.joined) : 'Okänt'}</span>
+          </div>
+          <div class="user-stats">
+            <span>🪙 <strong>${coins}</strong> coins</span>
+            <span>❤️ <strong>${favCount}</strong> favoriter</span>
+            <span>🏅 ${title}</span>
+          </div>
+          <div class="item-actions">
+            ${actions}
+            ${coinsEdit}
+          </div>
+        </div>`;
+      });
+    }
+
+    panel.innerHTML = h;
+
+    document.getElementById('account-search').addEventListener('input', (e) => renderAccountsPanel(e.target.value));
+
+    panel.querySelectorAll('[data-action]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const username = btn.dataset.user;
+        const action = btn.dataset.action;
+        const users = getUsers();
+        const idx = users.findIndex(u => u.username === username);
+        if (idx === -1) return;
+
+        if (action === 'ban') { if (confirm(`Banna ${username}?`)) { users[idx].banned = true; saveUsers(users); } }
+        else if (action === 'unban') { users[idx].banned = false; saveUsers(users); }
+        else if (action === 'delete') { if (confirm(`Ta bort ${username}?`)) { users.splice(idx, 1); saveUsers(users); } }
+        else if (action === 'promote') { users[idx].role = 'admin'; saveUsers(users); }
+        else if (action === 'demote') { users[idx].role = 'user'; saveUsers(users); }
+        else if (action === 'add-coins') {
+          const input = panel.querySelector(`input.coins-input[data-user="${username}"]`);
+          const amount = parseInt(input.value) || 0;
+          if (amount === 0) return;
+          if (users[idx].coins === undefined) users[idx].coins = 0;
+          users[idx].coins += amount;
+          if (users[idx].coins < 0) users[idx].coins = 0;
+          saveUsers(users);
+          input.value = 0;
+        }
+
+        renderAccountsPanel(document.getElementById('account-search').value);
+      });
+    });
+  }
+</script>
+</body>
+</html>

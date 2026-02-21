@@ -12,13 +12,16 @@
 <body>
   <header class="header">
     <div class="header-inner">
-      <a href="index.html" class="logo">
+      <div class="logo" id="logo">
         <span class="logo-icon">🎮</span>
         <span class="logo-text">Elias Spel</span>
-      </a>
+      </div>
       <div class="search-container">
         <span class="search-icon">🔍</span>
         <input type="text" id="search-input" class="search-input" placeholder="Vad vill du spela idag?" autocomplete="off">
+      </div>
+      <div class="header-auth" id="header-auth">
+        <button class="auth-btn login-btn" id="show-login">Logga in</button>
       </div>
       <button class="menu-toggle" id="menu-toggle" aria-label="Meny">
         <span></span>
@@ -27,6 +30,42 @@
       </button>
     </div>
   </header>
+
+  <!-- Auth Modal -->
+  <div class="modal-overlay" id="auth-modal">
+    <div class="modal auth-modal">
+      <div class="modal-header">
+        <h2 id="auth-modal-title">Logga in</h2>
+        <button class="modal-close" id="auth-close">&times;</button>
+      </div>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Logga in</button>
+        <button class="auth-tab" data-tab="register">Skapa konto</button>
+      </div>
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form">
+        <label class="modal-label" for="login-username">Användarnamn</label>
+        <input type="text" id="login-username" class="modal-input" placeholder="Ditt användarnamn" required>
+        <label class="modal-label" for="login-password">Lösenord</label>
+        <input type="password" id="login-password" class="modal-input" placeholder="Ditt lösenord" required>
+        <p class="auth-error" id="login-error"></p>
+        <button type="submit" class="modal-submit">Logga in</button>
+      </form>
+      <!-- Register Form -->
+      <form id="register-form" class="auth-form" style="display:none;">
+        <label class="modal-label" for="reg-username">Välj användarnamn</label>
+        <input type="text" id="reg-username" class="modal-input" placeholder="Minst 3 tecken" required minlength="3">
+        <label class="modal-label" for="reg-password">Välj lösenord</label>
+        <input type="password" id="reg-password" class="modal-input" placeholder="Minst 4 tecken" required minlength="4">
+        <label class="modal-label" for="reg-password2">Upprepa lösenord</label>
+        <input type="password" id="reg-password2" class="modal-input" placeholder="Samma lösenord igen" required>
+        <label class="modal-label">Välj avatar</label>
+        <div class="avatar-picker" id="reg-avatar-picker"></div>
+        <p class="auth-error" id="register-error"></p>
+        <button type="submit" class="modal-submit">Skapa konto</button>
+      </form>
+    </div>
+  </div>
 
   <nav class="mobile-nav" id="mobile-nav">
     <div class="mobile-search">
@@ -63,6 +102,45 @@
       <p>Inga spel hittades. Prova att söka efter något annat!</p>
     </div>
   </main>
+
+  <!-- Easter Egg Overlay -->
+  <div class="easter-egg-overlay" id="easter-egg-overlay">
+    <button class="easter-egg-close" id="easter-egg-close">&times;</button>
+    <img src="https://www.corny.se/fileadmin/user_upload/corny_se/products/BIG/salted-caramel/corny-big-granola-bar-salted-caramell-packaging.jpg" alt="Corny Salted Caramel" class="easter-egg-img">
+    <p class="easter-egg-text">Corny Salted Caramel &mdash; Elias favorit!</p>
+  </div>
+
+  <!-- Feedback Button & Modal -->
+  <button class="feedback-fab" id="feedback-fab">💡 Förslag</button>
+
+  <div class="modal-overlay" id="feedback-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>💡 Förslag & förbättringar</h2>
+        <button class="modal-close" id="feedback-close">&times;</button>
+      </div>
+      <form id="feedback-form">
+        <label class="modal-label" for="feedback-name">Ditt namn</label>
+        <input type="text" id="feedback-name" class="modal-input" placeholder="Skriv ditt namn..." required>
+
+        <label class="modal-label" for="feedback-type">Typ</label>
+        <select id="feedback-type" class="modal-input">
+          <option value="forslag">Nytt förslag</option>
+          <option value="forbattring">Förbättring</option>
+          <option value="bugg">Buggrapport</option>
+        </select>
+
+        <label class="modal-label" for="feedback-message">Meddelande</label>
+        <textarea id="feedback-message" class="modal-input modal-textarea" placeholder="Beskriv din idé eller förslag..." required></textarea>
+
+        <button type="submit" class="modal-submit">Skicka förslag</button>
+      </form>
+      <div class="feedback-success" id="feedback-success" style="display:none;">
+        <span class="feedback-success-icon">✅</span>
+        <p>Tack för ditt förslag!</p>
+      </div>
+    </div>
+  </div>
 
   <footer class="footer">
     <p>Skapat av <strong>Elia</strong> &mdash; Elias Spelportal &copy; 2026</p>
