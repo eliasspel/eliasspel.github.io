@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f0c29"/>
+      <stop offset="50%" style="stop-color:#302b63"/>
+      <stop offset="100%" style="stop-color:#24243e"/>
+    </linearGradient>
+  </defs>
+  <rect fill="url(#bg)" width="400" height="300"/>
+  <circle cx="60" cy="50" r="2" fill="#fff" opacity="0.7"/>
+  <circle cx="150" cy="30" r="1.5" fill="#fff" opacity="0.5"/>
+  <circle cx="250" cy="70" r="2" fill="#fff" opacity="0.8"/>
+  <circle cx="340" cy="40" r="1" fill="#fff" opacity="0.6"/>
+  <circle cx="100" cy="100" r="1.5" fill="#fff" opacity="0.4"/>
+  <circle cx="300" cy="120" r="2" fill="#fff" opacity="0.5"/>
+  <circle cx="50" cy="200" r="1" fill="#fff" opacity="0.6"/>
+  <circle cx="350" cy="230" r="1.5" fill="#fff" opacity="0.4"/>
+  <text x="200" y="140" text-anchor="middle" font-size="72">🚀</text>
+  <text x="200" y="200" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="28" fill="#fff">Space Runner</text>
+  <text x="200" y="235" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#a78bfa">ACTION</text>
+</svg>

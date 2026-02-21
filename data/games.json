@@ -1,0 +1,56 @@
+[
+  {
+    "id": "space-runner",
+    "title": "Space Runner",
+    "description": "Undvik hinder och samla stjärnor i rymden! Hur långt kan du nå?",
+    "category": "Action",
+    "thumbnail": "assets/images/space-runner.svg",
+    "path": "games/space-runner/index.html",
+    "featured": true
+  },
+  {
+    "id": "puzzle-blocks",
+    "title": "Puzzle Blocks",
+    "description": "Passa ihop blocken och rensa rader i detta klassiska pusselspel.",
+    "category": "Pussel",
+    "thumbnail": "assets/images/puzzle-blocks.svg",
+    "path": "games/puzzle-blocks/index.html",
+    "featured": true
+  },
+  {
+    "id": "color-match",
+    "title": "Color Match",
+    "description": "Testa dina reflexer! Matcha rätt färg innan tiden rinner ut.",
+    "category": "Pussel",
+    "thumbnail": "assets/images/color-match.svg",
+    "path": "games/color-match/index.html",
+    "featured": false
+  },
+  {
+    "id": "jungle-jump",
+    "title": "Jungle Jump",
+    "description": "Hoppa genom djungeln och samla frukter i detta spännande äventyr!",
+    "category": "Äventyr",
+    "thumbnail": "assets/images/jungle-jump.svg",
+    "path": "games/jungle-jump/index.html",
+    "featured": true
+  },
+  {
+    "id": "goal-master",
+    "title": "Goal Master",
+    "description": "Sikta och skjut! Bli den ultimata målgöraren i detta fotbollsspel.",
+    "category": "Sport",
+    "thumbnail": "assets/images/goal-master.svg",
+    "path": "games/goal-master/index.html",
+    "featured": false
+  },
+  {
+    "id": "math-ninja",
+    "title": "Math Ninja",
+    "description": "Lös matteuppgifter snabbt som en ninja! Perfekt för hjärnträning.",
+    "category": "Utbildning",
+    "thumbnail": "assets/images/math-ninja.svg",
+    "path": "games/math-ninja/index.html",
+    "featured": false
+  }
+]

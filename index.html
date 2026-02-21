@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elias Spelportal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">🎮</span>
+        <span class="logo-text">Elias Spel</span>
+      </a>
+      <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" class="search-input" placeholder="Vad vill du spela idag?" autocomplete="off">
+      </div>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Meny">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" id="mobile-nav">
+    <div class="mobile-search">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="mobile-search-input" class="search-input" placeholder="Sök spel..." autocomplete="off">
+    </div>
+    <div class="mobile-categories" id="mobile-categories"></div>
+  </nav>
+
+  <main class="main">
+    <section class="categories-bar">
+      <div class="categories-scroll" id="categories-container">
+        <button class="category-tag active" data-category="all">🎯 Alla</button>
+      </div>
+    </section>
+
+    <section class="recently-played" id="recently-played-section" style="display: none;">
+      <h2 class="section-title">⏱️ Senast spelade</h2>
+      <div class="games-grid small" id="recently-played-grid"></div>
+    </section>
+
+    <section class="featured-section" id="featured-section">
+      <h2 class="section-title">⭐ Utvalda spel</h2>
+      <div class="games-grid featured" id="featured-grid"></div>
+    </section>
+
+    <section class="all-games-section">
+      <h2 class="section-title" id="all-games-title">🕹️ Alla spel</h2>
+      <div class="games-grid" id="games-grid"></div>
+    </section>
+
+    <div class="no-results" id="no-results" style="display: none;">
+      <span class="no-results-icon">😕</span>
+      <p>Inga spel hittades. Prova att söka efter något annat!</p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Skapat av <strong>Elia</strong> &mdash; Elias Spelportal &copy; 2026</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

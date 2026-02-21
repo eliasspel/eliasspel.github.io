@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#422006"/>
+      <stop offset="100%" style="stop-color:#713f12"/>
+    </linearGradient>
+  </defs>
+  <rect fill="url(#bg)" width="400" height="300"/>
+  <text x="120" y="100" font-family="sans-serif" font-weight="bold" font-size="32" fill="#fbbf24" opacity="0.6">2+2</text>
+  <text x="240" y="80" font-family="sans-serif" font-weight="bold" font-size="24" fill="#fb923c" opacity="0.5">×7</text>
+  <text x="280" y="140" font-family="sans-serif" font-weight="bold" font-size="28" fill="#fbbf24" opacity="0.4">÷3</text>
+  <text x="200" y="160" text-anchor="middle" font-size="64">🥷</text>
+  <text x="200" y="230" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="28" fill="#fff">Math Ninja</text>
+  <text x="200" y="265" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#fbbf24">UTBILDNING</text>
+</svg>
