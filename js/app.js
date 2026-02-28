@@ -537,7 +537,7 @@ function openSettingsModal() {
 // ===== Load Games =====
 async function loadGames() {
   try {
-    const r = await fetch('data/games.json');
+    const r = await fetch('data/games.json?v=' + Date.now());
     allGames = await r.json();
     if (isGamePage()) initGamePage();
     else if (isProfilePage()) initProfilePage();
