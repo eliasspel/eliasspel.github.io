@@ -630,6 +630,10 @@
       highScore = score;
       localStorage.setItem('neondash-highscore', highScore.toString());
     }
+    // Send score to parent for coin rewards
+    if (score > 0 && window.parent !== window) {
+      window.parent.postMessage({ type: 'game-score', score: score }, '*');
+    }
     for (let i = 0; i < 40; i++) {
       const angle = Math.random() * Math.PI * 2;
       const speed = Math.random() * 7 + 2;
@@ -1165,6 +1169,10 @@
           if (ob.type === 'finish' && ob.x < player.x) {
             levelComplete = true;
             state = STATE.LEVEL_COMPLETE;
+            // Reward coins for completing a level
+            if (window.parent !== window) {
+              window.parent.postMessage({ type: 'game-score', score: 50 }, '*');
+            }
             return;
           }
         }

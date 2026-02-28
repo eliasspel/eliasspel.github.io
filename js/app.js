@@ -710,29 +710,17 @@ function initGamePage() {
   iframe.src = game.path;
   saveRecentlyPlayed(game.id);
 
-  // Auto-give 10 coins for playing
-  if (getCurrentUser()) addCoins(10);
-
-  // Claim reward button
-  const claimBtn = document.getElementById('claim-coins-btn');
-  if (claimBtn) {
-    const claimed = getClaimedGames();
-    const today = new Date().toDateString();
-    const key = `${gameId}_${today}`;
-    if (claimed[key] || !getCurrentUser()) {
-      claimBtn.style.display = 'none';
-    }
-    claimBtn.addEventListener('click', () => {
-      if (!getCurrentUser()) { openAuthModal('login'); return; }
-      if (claimGameCoins(gameId)) {
-        claimBtn.textContent = '✅ +25 coins!';
-        claimBtn.disabled = true;
-        claimBtn.classList.add('claimed');
-        // Update coins display
+  // Listen for score-based coin rewards from game iframe
+  window.addEventListener('message', (e) => {
+    if (e.data && e.data.type === 'game-score' && getCurrentUser()) {
+      const score = e.data.score || 0;
+      const earned = Math.floor(score / 10); // 1 coin per 10 points
+      if (earned > 0) {
+        addCoins(earned);
         renderHeaderAuth();
       }
-    });
-  }
+    }
+  });
 
   // Favorite
   const favBtn = document.getElementById('fav-btn');
